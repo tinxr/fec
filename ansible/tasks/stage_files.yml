@@ -1,0 +1,44 @@
+---
+  - name: Create libraries directory
+    ansible.builtin.file:
+      path: '/home/{{ usr_name }}{{ cplibs }}'
+      state: directory
+      owner: "{{ usr_name }}"
+      mode: '0755'
+
+  - name: Create bin files directory
+    ansible.builtin.file:
+      path: '/home/{{ usr_name }}{{ cpbins }}'
+      state: directory
+      owner: "{{ usr_name }}"
+      mode: '0755'
+
+  - name: Collect latest CircuitPython bin file for Raspberry Pi Pico
+    ansible.builtin.get_url:
+      url: https://downloads.circuitpython.org/bin/raspberry_pi_pico_w/en_US/adafruit-circuitpython-raspberry_pi_pico_w-en_US-8.1.0.uf2
+      dest: "/home/{{ usr_name }}{{ cpbins }}/adafruit-circuitpython-raspberry_pi_pico_w-en_US-8.1.0.uf2"
+
+  - name: Update permissions on bin file
+    ansible.builtin.file:
+      path: '/home/{{ usr_name }}{{ cpbins }}/adafruit-circuitpython-raspberry_pi_pico_w-en_US-8.1.0.uf2'
+      owner: "{{ usr_name }}"
+
+  - name: Collect the Adafruit official library bundle
+    ansible.builtin.get_url:
+      url: https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases/download/20230606/adafruit-circuitpython-bundle-8.x-mpy-20230606.zip
+      dest: "/home/{{ usr_name }}{{ cplibs }}/adafruit-circuitpython-bundle-8.x-mpy-20230606.zip"
+
+  - name: Collect the Community library bundle
+    ansible.builtin.get_url:
+      url: https://github.com/adafruit/CircuitPython_Community_Bundle/releases/download/20230606/circuitpython-community-bundle-8.x-mpy-20230606.zip
+      dest: "/home/{{ usr_name }}{{ cplibs }}/circuitpython-community-bundle-8.x-mpy-20230606.zip"
+
+  - name: Update permissions on first library file
+    ansible.builtin.file:
+      path: '/home/{{ usr_name }}{{ cplibs }}/adafruit-circuitpython-bundle-8.x-mpy-20230606.zip'
+      owner: "{{ usr_name }}"
+
+  - name: Update permissions on second library file
+    ansible.builtin.file:
+      path: '/home/{{ usr_name }}{{ cplibs }}/circuitpython-community-bundle-8.x-mpy-20230606.zip'
+      owner: "{{ usr_name }}"

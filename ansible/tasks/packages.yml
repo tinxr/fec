@@ -1,0 +1,56 @@
+---
+# Core package installation
+  - name: Installation of core packages
+    apt:
+      name: "{{ packages }}"
+    vars:
+      packages:
+        - btop
+        - build-essential
+        - byobu
+        - chromium-browser
+        - cmake
+        - curl
+        - fritzing
+        - gcc
+        - gdebi
+        - git
+        - gnome-software
+        - gnome-system-tools
+        - gparted
+        - htop
+        - iotop
+        - libfuse2
+        - mc
+        - neovim
+        - net-tools
+        - obs-studio
+        - openconnect
+        - openssh-server
+        - powertop
+        - python3-pip
+        - rclone
+        - screen
+        - simplescreenrecorder
+        - software-properties-common
+        - synaptic
+        - tmux
+        - transmission
+        - uget
+        - vim
+        - vlc
+        - wavemon
+        - wget
+        - whois
+
+# PIP Modules
+  - name: Installing PIP Modules
+    ansible.builtin.pip:
+      name: "{{ pip_packages }}"
+    vars:
+      pip_packages:
+        - rshell
+
+# SNAP Installs
+  - name: Install VS Code from SNAP
+    command: 'sudo snap install --classic code'

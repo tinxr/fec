@@ -1,0 +1,24 @@
+---
+  - name: Download and update Mu
+    ansible.builtin.get_url:
+      url: https://github.com/mu-editor/mu/releases/download/v1.2.0/MuEditor-Linux-1.2.0-x86_64.tar
+      dest: "{{ mu_dl_loc }}/MuEditor-Linux-1.2.0-x86_64.tar"
+    register: mu_extract
+
+  - name: Extract Mu from archive
+    ansible.builtin.unarchive:
+      src: "{{ mu_dl_loc }}/MuEditor-Linux-1.2.0-x86_64.tar"
+      dest: "{{ mu_dl_loc }}"
+    when: mu_extract
+
+  - name: Update Mu permissions
+    ansible.builtin.file:
+      path: "{{ mu_dl_loc }}/Mu_Editor-1.2.0-x86_64.AppImage"
+      owner: "{{ usr_name }}"
+      mode: u+x
+
+  - name: Remove Mu Download
+    file:
+      path: "{{ mu_dl_loc }}/MuEditor-Linux-1.2.0-x86_64.tar"
+      state: absent
+    when: mu_extract

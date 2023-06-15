@@ -1,0 +1,19 @@
+---
+- hosts: local
+  become: yes
+
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    - name: Update repositories
+      apt: update_cache=yes upgrade=yes autoremove=yes cache_valid_time=3600
+
+  # handlers:
+  #   - import_tasks: handlers/handlers.yml
+
+  tasks:
+    - import_tasks: tasks/packages.yml
+    - import_tasks: tasks/mu.yml
+    - import_tasks: tasks/zoom.yml
+    - import_tasks: tasks/stage_files.yml

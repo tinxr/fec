@@ -1,0 +1,10 @@
+---
+# Local user name
+usr_name: "my_username"
+
+# Location for Mu Downloads
+mu_dl_loc: "/home/{{ usr_name }}/Downloads/"
+
+# Circuit Python variables for downloads
+cpbins: "/Downloads/CircuitPython-bins"
+cplibs: "/Downloads/CircuitPython-libraries"

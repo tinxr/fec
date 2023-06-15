@@ -1,0 +1,32 @@
+---
+  - name: Gather package facts
+    ansible.builtin.package_facts:
+      manager: auto
+
+  - name: Check if Zoom is installed
+    ansible.builtin.debug:
+      msg: "Zoom not found"
+    when: "'zoom' not in ansible_facts.packages"
+    register: zoom_install
+
+  - name: Check for Zoom Download
+    stat:
+      path: "tmp/zoom_amd64.deb"
+    register: zoom_dl
+    when: zoom_install
+
+  - name: Download Zoom if not present
+    ansible.builtin.get_url:
+      url: https://zoom.us/client/5.14.10.3738/zoom_amd64.deb
+      dest: /tmp/zoom_amd64.deb
+    when: not zoom_dl.stat.exists
+
+  - name: Install Zoom if not present
+    apt:
+      deb: /tmp/zoom_amd64.deb
+    when: not zoom_dl.stat.exists
+
+  - name: remove Zoom Download
+    file:
+      path: /tmp/zoom_amd64.deb
+      state: absent
