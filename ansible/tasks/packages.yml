@@ -19,6 +19,7 @@
         - gnome-system-tools
         - gparted
         - htop
+        - idle3
         - iotop
         - libfuse2
         - mc
@@ -34,6 +35,7 @@
         - simplescreenrecorder
         - software-properties-common
         - synaptic
+        - tldr
         - tmux
         - transmission
         - uget
