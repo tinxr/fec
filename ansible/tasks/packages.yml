@@ -11,6 +11,7 @@
         - chromium-browser
         - cmake
         - curl
+        - dia
         - fritzing
         - gcc
         - gdebi
